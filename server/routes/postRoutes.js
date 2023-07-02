@@ -7,6 +7,41 @@ import post from '../mobgo db/models/post.js';
 dotenv.config();
 
 const router =express.Router();
+cloudinary.config({
+    cloud_name:process.env.CLOUDINARY_CLOUD_NAME,
+    api_key:process.env.CLOUDINARY_API_KEY,
+    api_key:process.env.CLOUDINARY_API_SECRET,
+});
+
+//get all posts
+
+router.route('/').get(async(req,res)=>{
+
+});
+
+//create a post
+
+router.route('/').post(async(req,res)=>{
+   try{
+    const{name,prompt,photo}=req.body;
+    const photourl =await cloudinary.uploader.upload(photo);
+
+    const newpost = await post.create({
+        name,
+        prompt,
+        photo:photourl.url,
+    })
+
+
+    res.status(201).json({success:true,data:newpost,data:newpost});
+
+
+   }catch(error){
+    res.status(500).json({success:false,message:error})
+
+   }
+
+});
 
 export default router;
 

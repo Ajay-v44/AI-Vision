@@ -12,21 +12,50 @@ const CreatePost = () => {
   });
   const [generatingImg, setGeneratingImg] = useState(false);
   const [loading, setLoading] = useState(false)
-  const generateImage=()=>{
+  const generateImage = async () => {
+    if (form.prompt) {
+      try {
+        setGeneratingImg(true);
+        const response = await fetch('http://localhost:8080/api/v1/ai', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
 
+          },
+          body: JSON.stringify({ prompt: form.prompt }),
+
+        })
+
+        const data = await response.json();
+
+        setForm({ ...form, photo: `data:image/jpeg;base64,${data.photo}` })
+
+
+      } catch (error) {
+        alert(error);
+        console.log(error);
+
+      } finally {
+        setGeneratingImg(false);
+
+      }
+    } else {
+      alert('please enter a prompt')
+
+    }
 
   }
   const handleSubmit = () => {
-   
+
 
   }
   const handleChange = (e) => {
-    setForm({...form,[e.target.name]:e.target.value})
+    setForm({ ...form, [e.target.name]: e.target.value })
 
   }
   const handleSurpriseMe = () => {
     const randomPrompt = getRandomPrompt(form.prompt);
-    setForm({ ...form,prompt:randomPrompt})
+    setForm({ ...form, prompt: randomPrompt })
 
   }
   return (
@@ -50,13 +79,13 @@ const CreatePost = () => {
           </div>
           <div className='mt-5 flex gap-5'>
             <button type="button" onClick={generateImage} className='text-white bg-green-700 font-medium rounded-md text-sm w-full sm:w-auto px-5 py-2.5 text-center ' >
-                {generatingImg?'Generating...':'Generate '}
+              {generatingImg ? 'Generating...' : 'Generate '}
             </button>
 
           </div>
           <div className='mt-10'>
             <p className='mt-2 text-[#666e75] text-[14px]'> Once you have created the image,you can share it with others in the community. </p>
-                <button type="submit" className='mt3 text-white bg-[#6469ff] font-medium rounded-md text-sm w-full sm:w-auto px-5  py-2.5 text-center' >{loading? 'Sharing...':'Share with the community'}</button>
+            <button type="submit" className='mt3 text-white bg-[#6469ff] font-medium rounded-md text-sm w-full sm:w-auto px-5  py-2.5 text-center' >{loading ? 'Sharing...' : 'Share with the community'}</button>
           </div>
 
         </form>

@@ -16,7 +16,7 @@ const CreatePost = () => {
     if (form.prompt) {
       try {
         setGeneratingImg(true);
-        const response = await fetch('http://localhost:8080/api/v1/ai', {
+        const response = await fetch('http://localhost:8080/api/v1/dalle', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -98,7 +98,7 @@ const CreatePost = () => {
             <FormField labelName="Yor Name" type="text" name="name" placeholder="Ajay" value={form.name} handleChange={handleChange} />
             <FormField labelName="prompt" type="text" name="prompt" placeholder="A plush toy robot sitting against a yellow wall" value={form.prompt} handleChange={handleChange} isSurpriseMe handleSurpriseMe={handleSurpriseMe} />
             <div className='relative bg-grey-50 border-grey-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-64 p-3 h-64 flex justify-center items-center '>
-              {form.photo ? (<img src={from.photo} alt={form.prompt} className='w-full h-full object-contain ' />) : (<img src={preview} alt="preview " className='w-9/12  h-9/12 object-contain opacity-40  ' />)}
+              {form.photo ? (<img src={form.photo} alt={form.prompt} className='w-full h-full object-contain ' />) : (<img src={preview} alt="preview " className='w-9/12  h-9/12 object-contain opacity-40  ' />)}
               {generatingImg && (
                 <div className="absolute inset-0 z-0 flex justify-center items-center bg-[rgba(0,0,0,0.5)] rounded-lg" >
                   <Loader />

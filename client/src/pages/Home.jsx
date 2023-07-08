@@ -3,6 +3,7 @@ import { Loader, card, FormField } from '../components'
 const RenderCards = ({ data, title }) => {
     if (data?.length > 0) {
         return data.map((post) => <card key={post.id} {...post} />)
+        
 
     }
 

@@ -14,7 +14,7 @@ app.use(express.json({limit:'50mb'}));
  
 
 app.use('/api/v1/post',postRoutes);
-app.use('/api/v1/ai',aiRoutes);
+app.use('/api/v1/dalle',aiRoutes);
 
 app.get('/',async(reg,res)=>{
     res.send('Hello from Ajay');
